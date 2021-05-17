@@ -7,7 +7,8 @@ const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const flash = require('connect-flash');
 const session = require('express-session');
-
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 
 
 //Requiring user route
@@ -25,11 +26,16 @@ mongoose.connect(process.env.DATABASE_LOCAL, {
 
 
 //middleware for session
+ 
 app.use(session({
     secret : 'Just a simple login/sign up application.',
     resave : true,
     saveUninitialized : true
 }));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 //middleware flash messages
 app.use(flash());
