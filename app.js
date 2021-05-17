@@ -9,6 +9,8 @@ const flash = require('connect-flash');
 const session = require('express-session');
 
 
+//Requiring user route
+const userRoutes = require('./routes/users');
 
 //Requiring user model
 
@@ -46,6 +48,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+app.use(userRoutes);
 
 app.listen(process.env.PORT, ()=> {
     console.log('Server is running');
