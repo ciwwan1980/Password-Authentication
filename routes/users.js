@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
 
 
 //Get routes
-router.get('/', (req,res)=> {
+router.get('/login', (req,res)=> {
     res.render('login');
 });
 
@@ -14,6 +15,8 @@ router.get('/signup', (req,res)=> {
 router.get('/dashboard', (req,res)=> {
     res.render('dashboard');
 });
+
+
 
 
 module.exports = router;
