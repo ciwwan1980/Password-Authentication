@@ -81,7 +81,17 @@ router.post('/forgot', (req, res, next)=> {
                 let token = buf.toString('hex');
                 done(err, token);
             })
-             }
+             },
+
+             (token,done)=>{
+                User.findOne({email : req.body.email})
+                    .then(user => {
+                    if(!user) {
+                        req.flash('error_msg', 'User does not exist with this email.');
+                        return res.redirect('/forgot');
+                    }
+                })
+                }
       ], err=>{
           if (err) res.redirect("/forgot")
       })
