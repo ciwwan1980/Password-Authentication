@@ -7,6 +7,15 @@ const passport = require('passport');
 //Requiring user model
 const User = require('../models/usermodel');
 
+// Checks if user is authenticated
+function isAuthenticatedUser(req, res, next) {
+    if(req.isAuthenticated()) {
+        return next();
+    }
+    req.flash('error_msg', 'Please Login first to access this page.')
+    res.redirect('/login');
+}
+
 //Get routes
 router.get('/login', (req,res)=> {
     res.render('login');
@@ -16,7 +25,7 @@ router.get('/signup', (req,res)=> {
     res.render('signup');
 });
 
-router.get('/dashboard', (req,res)=> {
+router.get('/dashboard', isAuthenticatedUser, (req,res)=> {
     res.render('dashboard');
 });
 
