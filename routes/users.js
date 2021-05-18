@@ -158,4 +158,43 @@ router.post('/reset/:token', (req, res)=>{
         res.redirect('/login');
     });
 });
+
+
+router.post('/reset/:token', (req, res)=>{
+    async.waterfall([
+        (done) => {
+            User.findOne({resetPasswordToken: req.params.token, resetPasswordExpires : {$gt : Date.now() } })
+                .then(user => {
+                    if(!user) {
+                        req.flash('error_msg', 'Password reset token in invalid or has been expired.');
+                        res.redirect('/forgot');
+                    }
+
+                    if(req.body.password !== req.body.confirmpassword) {
+                        req.flash('error_msg', "Password don't match.");
+                        return res.redirect('/forgot');
+                    }
+
+                    user.setPassword(req.body.password, err => {
+                        user.resetPasswordToken = undefined;
+                        user.resetPasswordExpires = undefined;
+
+                        user.save(err => {
+                            req.logIn(user, err => {
+                                done(err, user);
+                            })
+                        });
+                    });
+                })
+                .catch(err => {
+                    req.flash('error_msg', 'ERROR: '+err);
+                    res.redirect('/forgot');
+                });
+        },
+       
+
+    ], err => {
+        res.redirect('/login');
+    });
+});
 module.exports = router;
