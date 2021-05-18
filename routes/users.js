@@ -77,7 +77,7 @@ router.post('/login', passport.authenticate('local', {
 router.post('/password/change', (req, res)=> {
     if(req.body.password !== req.body.confirmpassword) {
         req.flash('error_msg', "Password don't match. Type again!");
-        res.redirect('/password/change');
+        return res.redirect('/password/change');
     }
 
     User.findOne({email : req.user.email})
