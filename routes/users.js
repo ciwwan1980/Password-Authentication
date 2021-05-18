@@ -62,6 +62,9 @@ router.post('/signup', (req, res)=> {
     })
     });;
 
+router.get('/password/change', isAuthenticatedUser, (req, res)=> {
+    res.render('changepassword');
+});
 
 
     //POST routes
