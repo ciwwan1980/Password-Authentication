@@ -74,7 +74,27 @@ router.post('/login', passport.authenticate('local', {
     failureFlash: 'Invalid email or password. Try Again!!!'
 }));
 
+router.post('/password/change', (req, res)=> {
+    if(req.body.password !== req.body.confirmpassword) {
+        req.flash('error_msg', "Password don't match. Type again!");
+        res.redirect('/password/change');
+    }
 
+    User.findOne({email : req.user.email})
+        .then(user => {
+            user.setPassword(req.body.password, err=>{
+                user.save()
+                    .then(user => {
+                        req.flash('success_msg', 'Password changed successfully.');
+                        res.redirect('/dashboard');
+                    })
+                    .catch(err => {
+                        req.flash('error_msg', 'ERROR: '+err);
+                        res.redirect('/password/change');
+                    });
+            });
+        });
+});
 // Routes to handle forgot password
 router.post('/forgot', (req, res, next)=> {
     let recoveryPassword = '';
