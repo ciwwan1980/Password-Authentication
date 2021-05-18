@@ -77,7 +77,7 @@ router.post('/forgot', (req, res, next)=> {
     let recoveryPassword = '';
       async.waterfall([
              (done) => {
-            crypto.randomBytes(20, (err , buf) => {
+            crypto.randomBytes(15, (err , buf) => {
                 let token = buf.toString('hex');
                 done(err, token);
             })
