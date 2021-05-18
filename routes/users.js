@@ -90,7 +90,18 @@ router.post('/forgot', (req, res, next)=> {
                         req.flash('error_msg', 'User does not exist with this email.');
                         return res.redirect('/forgot');
                     }
+                    user.resetPasswordToken = token;
+                    user.resetPasswordExpires = Date.now() + 1800000; //   half hours
+
+                    user.save(err => {
+                        done(err, token, user);
+                    });
                 })
+                 .catch(err => {
+                    req.flash('error_msg', 'ERROR: '+err);
+                    res.redirect('/forgot');
+                })
+                
                 }
       ], err=>{
           if (err) res.redirect("/forgot")
