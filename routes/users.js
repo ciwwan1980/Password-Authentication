@@ -35,6 +35,10 @@ router.get('/logout', (req, res)=> {
     res.redirect('/login');
 });
 
+router.get('/forgot', (req, res)=> {
+    res.render('forgot');
+});
+
 router.post('/signup', (req, res)=> {
     let {name, email, password} = req.body;
 
