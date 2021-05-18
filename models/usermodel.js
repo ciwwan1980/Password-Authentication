@@ -11,4 +11,5 @@ let userScheme = new mongoose.Schema({
    
 });
 
-module.exports = mongoose.model('User1', userScheme);
+userScheme.plugin(passportLocalMongoose);
+module.exports = mongoose.model('User', userScheme);

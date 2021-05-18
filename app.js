@@ -15,6 +15,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const userRoutes = require('./routes/users');
 
 //Requiring user model
+const User = require('./models/usermodel');
 
 dotenv.config({path : './config.env'});
 
@@ -35,6 +36,9 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 
 //middleware flash messages

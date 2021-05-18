@@ -3,6 +3,10 @@ const router = express.Router();
 const passport = require('passport');
 
 
+
+//Requiring user model
+const User = require('../models/usermodel');
+
 //Get routes
 router.get('/login', (req,res)=> {
     res.render('login');
