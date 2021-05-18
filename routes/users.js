@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-
+const crypto = require('crypto');
+const async = require('async');
+const nodemailer = require('nodemailer');
 
 
 //Requiring user model
@@ -70,4 +72,13 @@ router.post('/login', passport.authenticate('local', {
 }));
 
 
+// Routes to handle forgot password
+router.post('/forgot', (req, res, next)=> {
+    let recoveryPassword = '';
+      async.waterfall([
+
+      ], err=>{
+          if (err) res.redirect("/forgot")
+      })
+        }),
 module.exports = router;
