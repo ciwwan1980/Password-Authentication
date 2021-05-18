@@ -20,7 +20,24 @@ router.get('/dashboard', (req,res)=> {
     res.render('dashboard');
 });
 
+router.post('/signup', (req, res)=> {
+    let {name, email, password} = req.body;
+
+    let userData = {
+        name : name,
+        email :email
+    };
 
 
-
+    User.register(userData, password, (err, user)=> {
+        if(err) {
+            req.flash('error_msg', 'ERROR: '+err);
+            res.redirect('/login');
+        }
+        passport.authenticate('local') (req, res, ()=> {
+            req.flash('success_msg', 'Account created successfully');
+            res.redirect('/login');
+        });
+    })
+    });;
 module.exports = router;
