@@ -20,9 +20,9 @@
 
             <div class="mr-5">
                 <ul class="navbar-nav mr-auto mr-0">
-                  
+                     <% if(currentUser) { %>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#">name</b></a>
+                        <a class="nav-link text-white" href="#"><%= currentUser.name %></b></a>
                     </li>
 
                     <li class="nav-item">
@@ -32,7 +32,7 @@
                     <li class="nav-item">
                         <a class="nav-link text-white" href="/logout">Logout</a>
                     </li>
-                
+                    <% } %>
 
                 </ul>
             </div>
