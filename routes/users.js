@@ -20,6 +20,12 @@ router.get('/dashboard', (req,res)=> {
     res.render('dashboard');
 });
 
+router.get('/logout', (req, res)=> {
+    req.logOut();
+    req.flash('success_msg', 'You have been logged out successfully.');
+    res.redirect('/login');
+});
+
 router.post('/signup', (req, res)=> {
     let {name, email, password} = req.body;
 
@@ -40,6 +46,7 @@ router.post('/signup', (req, res)=> {
         });
     })
     });;
+
 
 
     //POST routes
