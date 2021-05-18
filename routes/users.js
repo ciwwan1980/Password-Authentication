@@ -40,4 +40,14 @@ router.post('/signup', (req, res)=> {
         });
     })
     });;
+
+
+    //POST routes
+router.post('/login', passport.authenticate('local', {
+    successRedirect : '/dashboard',
+    failureRedirect : '/login',
+    failureFlash: 'Invalid email or password. Try Again!!!'
+}));
+
+
 module.exports = router;
