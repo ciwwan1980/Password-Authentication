@@ -76,7 +76,12 @@ router.post('/login', passport.authenticate('local', {
 router.post('/forgot', (req, res, next)=> {
     let recoveryPassword = '';
       async.waterfall([
-
+             (done) => {
+            crypto.randomBytes(20, (err , buf) => {
+                let token = buf.toString('hex');
+                done(err, token);
+            })
+             }
       ], err=>{
           if (err) res.redirect("/forgot")
       })
