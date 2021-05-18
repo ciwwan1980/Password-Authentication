@@ -101,8 +101,32 @@ router.post('/forgot', (req, res, next)=> {
                     req.flash('error_msg', 'ERROR: '+err);
                     res.redirect('/forgot');
                 })
-                
+
+                },
+
+ (token, user) => {
+            let smtpTransport = nodemailer.createTransport({
+                service: 'Gmail',
+                auth: {
+                    user : process.env.GMAIL_EMAIL,
+                    pass: process.env.GMAIL_PASSWORD
                 }
+            });
+
+            let mailOptions = {
+                to: user.email,
+                from : 'Ciwwan kadoooo mygmail@gmail.com',
+                subject : 'Recovery Email from Auth Project',
+                text : 'Please click the following link to recover your passoword: \n\n'+
+                        'http://'+ req.headers.host +'/reset/'+token+'\n\n'+
+                        'If you did not request this, please ignore this email.'
+            };
+            smtpTransport.sendMail(mailOptions, err=> {
+                req.flash('success_msg', 'Email send with further instructions. Please check that.');
+                res.redirect('/forgot');
+            });
+        }
+
       ], err=>{
           if (err) res.redirect("/forgot")
       })
