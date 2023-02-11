@@ -1,7 +1,7 @@
 //const express = require('express');
 import express from "express";
-const app = express();
-
+//const app = express();
+import path from "path";
 const path = require('path');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
